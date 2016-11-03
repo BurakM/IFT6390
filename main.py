@@ -38,3 +38,4 @@ ax.imshow(I, cmap=plt.cm.bone)
 plt.show()
 
 # Code continues here
+# and here.
