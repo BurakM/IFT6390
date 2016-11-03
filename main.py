@@ -36,3 +36,5 @@ fig, ax = plt.subplots(1, 1)
 ax.set_title("whatever image")
 ax.imshow(I, cmap=plt.cm.bone)
 plt.show()
+
+# Code continues here
