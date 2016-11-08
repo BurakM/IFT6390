@@ -5,36 +5,35 @@ import numpy as np
 import skimage
 import scipy
 from os import walk, path, fork, getcwd, mkdir
-from Utilities import * # Import everything in the file IFT6390_Functions.
+from Utilities import DCM # Import utilities.
 
-# Get base path and make a list of files that need to be treated.
-
+# Create empty lists that will contain the path for all patient images.
 base_path = getcwd() 
-DicomFiles = list()
+DicomFiles_Pat1 = list()
+DicomFiles_Pat2 = list()
+DicomFiles_Pat3 = list()
 
-# Say you want to load all dicom images from these two folders : 
+# I'm using my own local path as we're not gonna upload the images on github. 
+MikaelPath = "/Users/Mikael/Dropbox/PhD/Classes/IFT6390/Data_Project/" # This is my base path.
 
-DicomFiles.append(base_path + "/Images/Example_Image") # Folder #1.
-DicomFiles.append(base_path + "/Images/Example_Image2") # Folder #2.
+DicomFiles_Pat1.append(MikaelPath + "patient1_images_anon")
+DicomFiles_Pat2.append(MikaelPath + "patient2_images_anon")
+DicomFiles_Pat3.append(MikaelPath + "patient3_images_anon")
 
-# This will load all of the files : 
-file_list = load_images_in_folder(DicomFiles)
+# Load 3D volume for all patients.
+pat1 = DCM.import_patient(DicomFiles_Pat1)
+pat2 = DCM.import_patient(DicomFiles_Pat2)
+pat3 = DCM.import_patient(DicomFiles_Pat3)
 
-# File list would hold ALL of the .dcm files that are in all folders listed in DicomFiles.
-
-# These calls would give you the dicom information of each file, for example. 
-ds = dicom.read_file(file_list[0]) # Here, reading first file
-ds1 = dicom.read_file(file_list[1]) # Here, reading second file.
-
-# Now, some examples of what is contained inside the "structure" ds : 
-
-nbpix_row, nbpix_column = ds.pixel_array.shape # Nb of pixels.
-row_spacing, column_spacing = ds.PixelSpacing # Px spacing in mm.
-I = ds.pixel_array # Image itself.
-
-fig, ax = plt.subplots(1, 1)
-ax.set_title("whatever image")
-ax.imshow(I, cmap=plt.cm.bone)
+# Display one slice of each patient.
+sl = 250
+fig, ax = plt.subplots(2, 2)
+ax[0,0].set_title("Patient 1, slice " + str(sl))
+ax[0,0].imshow(pat1[:,:,sl], cmap=plt.cm.bone)
+ax[0,1].set_title("Patient 2, slice " + str(sl))
+ax[0,1].imshow(pat2[:,:,sl], cmap=plt.cm.bone)
+ax[1,0].set_title("Patient 3, slice " + str(sl))
+ax[1,0].imshow(pat3[:,:,sl], cmap=plt.cm.bone)
 plt.show()
 
 # Code continues here

@@ -1,0 +1,1 @@
+# The file DCM.py is a module that contains several functions to load and pre-treat the dicom data.
