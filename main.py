@@ -71,6 +71,8 @@ for loc in lung_locations:
 # Calculate some GLCM properties for each patch.
 diss = []
 corr = []
+ASM = []
+energy = []
 k = 0
 for patch in lung_patches:
  	# Other choices : 
@@ -78,15 +80,21 @@ for patch in lung_patches:
  	glcm = feature.greycomatrix(patch.astype(np.uint8), [5], [0], 256, symmetric=True, normed=True)
  	diss.append(feature.greycoprops(glcm,'dissimilarity')[0,0])
  	corr.append(feature.greycoprops(glcm,'correlation')[0,0])
+ 	energy.append(feature.greycoprops(glcm,'energy')[0,0])
+ 	ASM.append(feature.greycoprops(glcm,'ASM')[0,0])
  	k += 1
 
 dissimilarity_image = np.zeros([512,512])
 correlation_image = np.zeros([512,512])
+ASM_image = np.zeros([512,512])
+energy_image = np.zeros([512,512])
 
 cpt = 0
 for loc in lung_locations:
  	dissimilarity_image[loc[0],loc[1]] = diss[cpt]
  	correlation_image[loc[0],loc[1]] = corr[cpt]
+ 	ASM_image[loc[0],loc[1]] = ASM[cpt]
+ 	energy_image[loc[0],loc[1]] = energy[cpt]
  	cpt += 1
 
 
@@ -95,6 +103,11 @@ ax[0,0].set_title("Dissimilarity")
 ax[0,0].imshow(dissimilarity_image, cmap=plt.cm.bone)
 ax[0,1].set_title("Correlation")
 ax[0,1].imshow(correlation_image, cmap=plt.cm.bone)
+ax[1,0].set_title("Energy")
+ax[1,0].imshow(energy_image, cmap=plt.cm.bone)
+ax[1,1].set_title("ASM")
+ax[1,1].imshow(ASM_image, cmap=plt.cm.bone)
+
 plt.show()
 
 
