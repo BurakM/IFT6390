@@ -1,4 +1,4 @@
-from os import walk, path, fork, getcwd, mkdir, makedirs
+from os import walk, path, getcwd, mkdir, makedirs
 import dicom, dicom.UID
 from dicom.dataset import Dataset, FileDataset
 import datetime, time
@@ -131,4 +131,4 @@ def CreatePatientMask(PATIENT_NO,pat_Nsl):
 		write_dicom_8bit(mask_pat[:,:,ii],filename_write_dicom)	
 
 
-	return	
+	return		

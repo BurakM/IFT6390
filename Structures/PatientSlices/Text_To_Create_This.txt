@@ -1,0 +1,9 @@
+print pat1.shape 
+print find(sum(sum(pat1,axis=1),axis=0))
+
+np.savetxt(str(PATIENT)+ '.txt',find(sum(sum(pat1,axis=1),axis=0)))
+
+print base_path + '/Structures/PatientSlices/' + str(PATIENT) + '.txt'
+
+wow = np.loadtxt(base_path + '/Structures/PatientSlices/' + str(PATIENT) + '.txt')
+
